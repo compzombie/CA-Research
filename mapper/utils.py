@@ -1,3 +1,5 @@
+import igraph
+from subprocess import call
 from PIL import Image, ImageDraw
 
 def rule110(current_gen, next_gen):
@@ -75,7 +77,7 @@ def save_lattice(lattice, name, binary=True, x_size=1, y_size=8):
         for i, cell in enumerate(lattice[l]):
             x = i * x_size
             y = l
-            
+
             if binary:
                 color = (0, 0, 0) if cell == 0 else (255, 255, 255)
             else:
@@ -97,5 +99,30 @@ def save_lattice(lattice, name, binary=True, x_size=1, y_size=8):
                     color = (255, 255, 255)
             draw.rectangle((x, y, x + (x_size), y + (y_size)), fill=color)
 
-
     image.save(name)
+
+def draw_graph(vertices, edges, name):
+    # Create a Graph object
+    g = igraph.Graph(directed=True)
+
+    # Add vertices to the graph
+    g.add_vertices(vertices)
+    # Add edges to the grapA
+    g.add_edges(edges)
+    
+    # Clean up unconnected vertices
+    g.vs["name"] = vertices
+    layout = g.layout_kamada_kawai()
+    
+    # Plot the graph
+    plot = igraph.plot(g, target=name, vertex_label=g.vs["name"])
+    plot.save(name)
+    
+def parse_verts_edges(lattice):
+    verts = [str(l) for l in lattice]
+
+    edges = []
+    for i in range(len(lattice)-1):
+        edges.append((str(lattice[i]),str(lattice[i+1])))
+
+    return (verts, edges)

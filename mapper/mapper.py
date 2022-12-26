@@ -13,7 +13,9 @@ def help_msg():
     config (required): path to configuration for Mapper
     bin: png of binary graph
     state: png of states graph
-    phase: png of phase space graph   
+    phase*: png of phase space graph   
+
+    * output only if at least bin or state is set
     """
 
 def get_arg(arg):
@@ -61,6 +63,7 @@ if outfile == "" or config == "":
     print(help_msg())
     exit()
 
+#run rules and parse output options
 for ic, gens in parse_config(config):
     bin_lat = gen_lattice(ic, gens)
     stat_lat = lattice_states(bin_lat)
@@ -68,3 +71,16 @@ for ic, gens in parse_config(config):
         save_lattice(bin_lat, outfile+"_bin.png", binary=True) 
     if state == "True":
         save_lattice(stat_lat, outfile+"_state.png", binary=False) 
+    if phase == "True":
+        verts = []
+        edges = []
+        
+        if bin == "True":
+            verts, edges = parse_verts_edges(bin_lat)
+            draw_graph(verts, edges, outfile+"_binphase.png")
+        if state == "True":
+            verts, edges = parse_verts_edges(stat_lat)
+            draw_graph(verts, edges, outfile+"_statephase.png")
+
+#TODO need to save multiple files
+#TODO refactor phase space to include binary AND state phase space
