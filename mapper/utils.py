@@ -1,3 +1,5 @@
+from PIL import Image, ImageDraw
+
 def rule110(current_gen, next_gen):
     # Iterate over each cell in the current generation
     for i in range(len(current_gen)):
@@ -59,3 +61,41 @@ def lattice_states(lattice):
         states.append(state)
     return states
 
+def save_lattice(lattice, name, binary=True, x_size=1, y_size=8):
+    # Determine the size of the image based on the size of the lattice and the cell size
+    width = len(lattice[0]) * x_size
+    height = len(lattice)
+    
+    # Create a new image and a drawing context
+    image = Image.new('RGB', (width, height), (255, 255, 255))
+    draw = ImageDraw.Draw(image)
+    
+    # Iterate over each cell in the lattice and draw a black or white rectangle
+    for l in range(len(lattice)):
+        for i, cell in enumerate(lattice[l]):
+            x = i * x_size
+            y = l
+            
+            if binary:
+                color = (0, 0, 0) if cell == 0 else (255, 255, 255)
+            else:
+                if cell == 0:
+                    color = (0,0,0)
+                if cell == 1:
+                    color = (255,0,0)
+                if cell == 2:
+                    color = (255,255,51)
+                if cell == 3:
+                    color = (51, 255, 51)
+                if cell == 4:
+                    color = (51,255,255)
+                if cell == 5:
+                    color = (51,51,255)
+                if cell == 6:
+                    color = (255, 51, 255)
+                if cell == 7:
+                    color = (255, 255, 255)
+            draw.rectangle((x, y, x + (x_size), y + (y_size)), fill=color)
+
+
+    image.save(name)

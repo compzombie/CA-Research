@@ -51,7 +51,7 @@ if len(sys.argv) < 3:
 outfile = get_arg("outfile=")
 config = get_arg("config=")
 
-#parse these to binary
+#parse these to boolean
 bin = get_arg("bin=")
 state = get_arg("state=")
 phase = get_arg("phase=")
@@ -64,3 +64,7 @@ if outfile == "" or config == "":
 for ic, gens in parse_config(config):
     bin_lat = gen_lattice(ic, gens)
     stat_lat = lattice_states(bin_lat)
+    if bin == "True":
+        save_lattice(bin_lat, outfile+"_bin.png", binary=True) 
+    if state == "True":
+        save_lattice(stat_lat, outfile+"_state.png", binary=False) 
