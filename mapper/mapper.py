@@ -64,23 +64,25 @@ if outfile == "" or config == "":
     exit()
 
 #run rules and parse output options
+fcnt = 0
 for ic, gens in parse_config(config):
     bin_lat = gen_lattice(ic, gens)
     stat_lat = lattice_states(bin_lat)
     if bin == "True":
-        save_lattice(bin_lat, outfile+"_bin.png", binary=True) 
+        save_lattice(bin_lat, outfile + "_bin_" + str(fcnt) + ".png", binary=True) 
     if state == "True":
-        save_lattice(stat_lat, outfile+"_state.png", binary=False) 
+        save_lattice(stat_lat, outfile + "_state_" + str(fcnt) + ".png", binary=False) 
     if phase == "True":
         verts = []
         edges = []
         
         if bin == "True":
             verts, edges = parse_verts_edges(bin_lat)
-            draw_graph(verts, edges, outfile+"_binphase.png")
+            draw_graph(verts, edges, outfile+"_binphase_" + str(fcnt) + ".png")
         if state == "True":
             verts, edges = parse_verts_edges(stat_lat)
-            draw_graph(verts, edges, outfile+"_statephase.png")
+            draw_graph(verts, edges, outfile+"_statephase_" + str(fcnt) + ".png")
+    fcnt += 1
 
 #TODO need to save multiple files
 #TODO refactor phase space to include binary AND state phase space

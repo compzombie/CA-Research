@@ -53,8 +53,8 @@ def lattice_states(lattice):
         for c in range(len(lattice[i-1])):
 
             # Determine the state of the current cell and its neighbors
-            left_neighbor = lattice[i-1][c - 1] if c > 0 else 0
-            right_neighbor = lattice[i-1][c + 1] if c < len(lattice[i-1]) - 1 else 0
+            left_neighbor = lattice[i-1][c - 1] if c > 0 else lattice[i-1][-1]
+            right_neighbor = lattice[i-1][c + 1] if c < len(lattice[i-1]) - 1 else lattice[i-1][0]
             current_cell = lattice[i-1][c]
         
             cells = str(left_neighbor) + str(current_cell) + str(right_neighbor)
