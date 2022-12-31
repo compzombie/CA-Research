@@ -140,7 +140,7 @@ def parse_verts_edges(lattice):
 
     out_verts = [v for verts in v_list for v in verts]
     out_verts = list(set(out_verts))
-    out_edges = edges
+    out_edges = list(set(edges))
     return (out_verts, out_edges)
 """
 def parse_verts_edges(lattice):

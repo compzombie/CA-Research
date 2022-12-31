@@ -33,12 +33,13 @@ def parse_config(cf_path):
     with open(cf_path) as cf:
         lines = cf.readlines()
         for l in lines:
-            pair = []
             parts = l.split(",")
-
+            lstore = "" 
+            gstore = 0
             if len(parts) > 1:
-                pair.append(int(parts[0]))
-                pair.append(int(parts[1]))
+                lstore = parts[0]
+                gstore = int(parts[1])
+            pair = (lstore, gstore)
             
             if len(pair) > 1:
                 out.append(pair)
@@ -84,5 +85,4 @@ for ic, gens in parse_config(config):
             draw_graph(verts, edges, outfile+"_statephase_" + str(fcnt) + ".png")
     fcnt += 1
 
-#TODO need to make phase state graph be 3 cell neighborhoods, not everything
 #TODO I want to be able to look at the graphs without needing all the other output
