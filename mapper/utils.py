@@ -44,8 +44,6 @@ def gen_lattice(ic, gens):
 
 def lattice_states(lattice):
     states = []
-    #save initial conditions
-    states.append(lattice[0]) 
     # Iterate over each cell in the current generation
     for i in range(len(lattice)):
         i += 1
@@ -145,10 +143,19 @@ def parse_verts_edges(lattice):
 """
 def parse_verts_edges(lattice):
     verts = [str(l) for l in lattice]
+    for row in lattice:
+        v = []
+        for c in range(len(row)):
+            v.append(row[c-1]) if c > 0 else v.append(row[-1])
+            v.append(row[c])
+            v.append(row[c+1]) if c < len(row) else v.append(row[0])
+
+        verts.append(v)
 
     edges = []
-    for i in range(len(lattice)-1):
-        edges.append((str(lattice[i]),str(lattice[i+1])))
+    for r in range(len(lattice)):
+        e = ()
+        for c in range(len(row)):
 
     return (verts, edges)
 """
