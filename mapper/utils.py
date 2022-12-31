@@ -119,6 +119,31 @@ def draw_graph(vertices, edges, name):
     plot.save(name)
     
 def parse_verts_edges(lattice):
+    #each cell in each generation in a vertex, map it to the next gen via an edge
+    #collect a list of list of verts (verts for each gen)
+    v_list = []
+    for l in lattice:
+        verts = []
+        for i in range(len(l)):
+            v = ""
+            v += str(l[i-1]) if i > 0 else str(l[-1])
+            v += str(l[i])
+            v += str(l[i+1]) if i < len(l)-1 else str(l[0])
+            verts.append(v)
+        v_list.append(verts)
+
+    edges = []
+    #for each index in verts and vert list build an edge between the two
+    for i in range(1, len(v_list)):
+        for j in range(len(v_list[i])):
+            edges.append((v_list[i-1][j], v_list[i][j]))
+
+    out_verts = [v for verts in v_list for v in verts]
+    out_verts = list(set(out_verts))
+    out_edges = edges
+    return (out_verts, out_edges)
+"""
+def parse_verts_edges(lattice):
     verts = [str(l) for l in lattice]
 
     edges = []
@@ -126,3 +151,4 @@ def parse_verts_edges(lattice):
         edges.append((str(lattice[i]),str(lattice[i+1])))
 
     return (verts, edges)
+"""
