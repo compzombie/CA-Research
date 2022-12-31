@@ -84,5 +84,5 @@ for ic, gens in parse_config(config):
             draw_graph(verts, edges, outfile+"_statephase_" + str(fcnt) + ".png")
     fcnt += 1
 
-#TODO need to save multiple files
-#TODO refactor phase space to include binary AND state phase space
+#TODO need to make phase state graph be 3 cell neighborhoods, not everything
+#TODO I want to be able to look at the graphs without needing all the other output
